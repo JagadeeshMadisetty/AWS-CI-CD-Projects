@@ -6,8 +6,9 @@ from src.exception import  CustomException
 from src.logger import logging
 from dataclasses import dataclass
 
-from src.Components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformation
 #from src.Components.data_ingestion import DataTransaformationConfig
+from src.components.model_trainer import ModelTrainer
 
 @dataclass
 class DataIngestionConfig:
@@ -52,4 +53,9 @@ if __name__=='__main__':
     train_data,test_data=obj.initiate_data_ingestion()
 
     data_transaformation = DataTransformation()
-    data_transaformation.initiate_data_transformation(train_path=train_data,test_path=test_data)
+    train_arr,test_arr,_=data_transaformation.initiate_data_transformation(train_path=train_data,test_path=test_data)
+
+    model_trainer= ModelTrainer()
+    print(model_trainer.initiate_model_trainer(train_arr,test_arr))
+
+    logging.info('Model running completed')
